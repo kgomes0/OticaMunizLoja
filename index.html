@@ -927,13 +927,13 @@ function abrirProduto(cod) {
       <h3 id="det-nome">${esc(p.nome_produto)}</h3>
       <div class="preco">${dinheiro(p.preco_venda)}</div>
       ${pix ? `<span class="preco-pix">${dinheiro(pix)} no Pix</span>` : ''}
-      <span style="color:var(--tinta-2);font-size:.9rem">${parcelas(p.preco_venda)}</span>
+      <span style="color:var(--texto-2);font-size:.9rem">${parcelas(p.preco_venda)}</span>
       <dl>${linhas}</dl>
       <div class="qtd-linha">
         <button class="btn btn-primario" data-add-modal="${esc(p.codigo_barras)}">Adicionar ao carrinho</button>
       </div>
       <a class="btn btn-claro" href="${linkZap(msg)}" target="_blank" rel="noopener">Tirar dúvida no WhatsApp</a>
-      <span style="font-size:.8rem;color:var(--tinta-2)">${Number(p.qtd_estoque) > 0 ? '✓ Disponível na loja' : 'Sob encomenda — consulte o prazo'}</span>
+      <span style="font-size:.8rem;color:var(--texto-2)">${Number(p.qtd_estoque) > 0 ? '✓ Disponível na loja' : 'Sob encomenda — consulte o prazo'}</span>
     </div>`;
   $('det').querySelector('[data-add-modal]').onclick = () => { adicionarAoCarrinho(p.codigo_barras); $('janela').close(); abrirCarrinho(); };
   const foto = $('det-foto');
@@ -1224,21 +1224,21 @@ function desenharFeito() {
     <div class="feito">
       <div class="ok">✓</div>
       <h3>Pedido nº ${esc(ped.id)}</h3>
-      <p style="color:var(--tinta-2)">Total: <b style="color:var(--tinta)">${dinheiro(ped.total)}</b> · ${esc(PAGAMENTOS[ped.dados.p_forma_pagto])}</p>
-      <p style="font-size:.9rem;color:var(--tinta-2)"><b>Último passo:</b> envie o pedido pelo WhatsApp para a loja confirmar.</p>
+      <p style="color:var(--texto-2)">Total: <b style="color:var(--texto)">${dinheiro(ped.total)}</b> · ${esc(PAGAMENTOS[ped.dados.p_forma_pagto])}</p>
+      <p style="font-size:.95rem;color:var(--texto-2)">${ped.id === 'DEMO' ? '' : '<b style="color:var(--texto)">A loja já recebeu seu pedido.</b> '}Vamos te chamar no WhatsApp ${esc(ped.dados.p_cliente_telefone)} para confirmar.</p>
       ${codigoPix ? `
         <div class="pix-box">
           <b>Pague com Pix</b>
           <div id="qr"></div>
           <textarea readonly id="pix-codigo" aria-label="Código Pix copia e cola">${codigoPix}</textarea>
           <button class="btn btn-claro" onclick="copiarPix(this)">Copiar código Pix</button>
-          <small style="color:var(--tinta-2)">Depois de pagar, mande o comprovante no WhatsApp.</small>
-        </div>` : ehPix ? '<p style="font-size:.9rem;color:var(--tinta-2)">A chave Pix será enviada pelo WhatsApp.</p>' : ''}
+          <small style="color:var(--texto-2)">Depois de pagar, a loja confere o Pix e confirma seu pedido.</small>
+        </div>` : ehPix ? '<p style="font-size:.9rem;color:var(--texto-2)">A loja vai te enviar a chave Pix pelo WhatsApp.</p>' : ''}
       ${ped.id === 'DEMO' ? '<div class="aviso-demo">Modo demonstração: o pedido não foi gravado no banco.</div>' : ''}
     </div>`;
   $('gaveta-pe').innerHTML = `
-    <a class="btn btn-zap" href="${linkZap(mensagemPedido(ped))}" target="_blank" rel="noopener">Enviar pedido pelo WhatsApp</a>
-    <button class="btn btn-claro" onclick="fecharCarrinho()">Voltar à loja</button>`;
+    <button class="btn btn-primario" onclick="fecharCarrinho()">Voltar à loja</button>
+    <a class="btn btn-claro" href="${linkZap(mensagemPedido(ped))}" target="_blank" rel="noopener">Quer adiantar? Fale com a loja no WhatsApp</a>`;
   if (codigoPix) desenharQR(codigoPix);
 }
 
